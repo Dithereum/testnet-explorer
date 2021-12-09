@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="assets/img/DithereumIconFavicon.png">
+    <title>Dithereum Block Explorer</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+     <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand logo" href="index.html">
+          <img src="assets/img/logo.png">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://t.me/Dithereum" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://twitter.com/dithereum" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.youtube.com/channel/UCDPzTaaVk4ywEsLaf6nLAeQ" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="container mt-5 height-min">
+      <div class="row">
+        <div class="col-lg-12 text-center mb-4" >
+          <h2>Dithereum Block Explorer</h2>       
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="txtInput" placeholder="Enter Txn Hash / Address" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button id="btnSearch" class="btn btn-primary" type="button">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-lg-12 text-center">
+          <div class="card">
+            <div class="card-header text-center mb-5">
+               <h3> Transaction Details </h3>
+            </div>
+            <div class="card-body">
+              <div id="txDetails"></div>    
+            </div>    
+          </div>    
+        </div>
+      </div>
+    </div>
+    <footer class="footer bg-light py-3 mt-5">
+      <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="m-0">© 2021 - 2021 Dithereum. All rights reserved.</p>
+        </div>
+      </div>
+      </div>
+    </footer>
+<!-- Bootstrap -->
+    <script src="assets/js/jquery-3.5.1.slim.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+<!-- Web3 -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
+    <script>
+      var provider = 'https://node-mainnet.dithereum.org/'; //Your Infura Endpoint
+      var web3Provider = new Web3.providers.HttpProvider(provider);
+      var txHash = '';
+      $.urlParam = function(name){
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          return results[1] || 0;
+      };
+      if (window.location.href.indexOf('tx') > 0) {
+         txHash = window.location.href.substr(51); //47
+      }
+
+      async function init(){
+        var web3 = new Web3(provider);
+        var txDetails = "";
+        const tx = await web3.eth.getTransactionReceipt(txHash);
+        const hash = tx.transactionHash;
+        const from = tx.from;
+        const to = tx.to;
+        const gasUsed = tx.gasUsed;
+        var gasPrice = web3.utils.hexToNumber(tx.effectiveGasPrice);
+        gasPrice = gasPrice/1e18;
+        gasPrice = logEtoLongNumber(gasPrice);
+        const gasGwei = gasPrice*1e9;
+        const nonce = tx.nonce;
+        const txIndex = tx.transactionIndex;
+        const inputData = tx.input;
+        const block = tx.blockNumber;
+        const status = tx.status;
+        const cumulativeGasUsed = tx.cumulativeGasUsed;
+        const blockData =await web3.eth.getBlock(block);
+        var time = blockData.timestamp;
+        time = convertTimestamp(time);
+        
+        $('#txDetails').append('<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Transaction Hash:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;"><a href="transaction.html?tx='+hash+'">'+hash+'</a></div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Status:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+status+'</div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Block:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+block+'</div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Timestamp:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+time+'</div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">From:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;"><a href="address.html?address='+from+'">'+from+'</a></div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">To:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;"><a href="address.html?address='+to+'">'+to+'</a></div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Gas:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+gasUsed+'</div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Gas Price:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+gasPrice+' DTH ('+gasGwei+' Gwei)</div>'+
+                                '</div><br>'+
+                                '<div class="row">'+
+                                  '<div class="col-md-3" style="text-align:left;">Cumulative Gas Used:</div>'+
+                                  '<div class="col-md-9" style="text-align:left;">'+cumulativeGasUsed+'</div>'+
+                                '</div>'
+                                );
+
+    }
+    setTimeout(init,1000);
+
+      function convertTimestamp(time) {
+            var d = new Date(time * 1000), // Convert the passed timestamp to milliseconds
+                yyyy = d.getFullYear(),
+                mm = ('0' + (d.getMonth() + 1)).slice(-2),  // Months are zero based. Add leading 0.
+                dd = ('0' + d.getDate()).slice(-2),         // Add leading 0.
+                hh = d.getHours(),
+                h = hh,
+                min = ('0' + d.getMinutes()).slice(-2),     // Add leading 0.
+                ampm = 'AM',
+                time;
+            if (hh > 12) {
+                h = hh - 12;
+                ampm = 'PM';
+            } else if (hh === 12) {
+                h = 12;
+                ampm = 'PM';
+            } else if (hh == 0) {
+                h = 12;
+            }
+          // ie: 2014-03-24, 3:00 PM
+            time1 = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
+            return time1;
+        }
+        $('#btnSearch').click(function(){
+      const txtInput = $('#txtInput').val();
+      
+      if(txtInput.length==66){
+          location.href="transaction.html?tx="+txtInput;
+      }
+      if(txtInput.length==42){
+        location.href="address.html?address="+txtInput;
+      }
+    });
+
+function logEtoLongNumber(amountInLogE){
+    
+    amountInLogE = amountInLogE.toString();
+    var noDecimalDigits = "";
+  
+    if(amountInLogE.includes("e-")){
+      
+      var splitString = amountInLogE.split("e-"); //split the string from 'e-'
+  
+      noDecimalDigits = splitString[0].replace(".", ""); //remove decimal point
+  
+      //how far decimals to move
+      var zeroString = "";
+      for(var i=1; i < splitString[1]; i++){
+        zeroString += "0";
+      }
+  
+      return  "0."+zeroString+noDecimalDigits;
+      
+    }
+    else if(amountInLogE.includes("e+")){
+  
+      var splitString = amountInLogE.split("e+"); //split the string from 'e+'
+      var ePower = parseInt(splitString[1]);
+  
+      noDecimalDigits = splitString[0].replace(".", ""); //remove decimal point
+  
+      if(ePower >= noDecimalDigits.length-1){
+        var zerosToAdd = ePower  - noDecimalDigits.length;
+  
+        for(var i=0; i <= zerosToAdd; i++){
+          noDecimalDigits += "0";
+        }
+  
+      }
+      else{
+        //this condition will run if the e+n is less than numbers
+        var stringFirstHalf = noDecimalDigits.slice(0, ePower+1);
+        var stringSecondHalf = noDecimalDigits.slice(ePower+1);
+  
+        return stringFirstHalf+"."+stringSecondHalf;
+      }
+      return noDecimalDigits;
+    }
+    return amountInLogE;  //by default it returns stringify value of original number if its not logarithm number
+  }
+    </script>
+  </body>
+</html>
