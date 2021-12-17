@@ -24,6 +24,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+              <button id="addDTHNetwork" style="margin-top: 15px;" class="btn btn-primary">Add DTH Network</button>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="https://t.me/Dithereum" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
             </li>
             <li class="nav-item">
@@ -189,7 +192,25 @@
         location.href="address.html?address="+txtInput;
       }
     });
-
+ $("#addDTHNetwork").click(async function(){
+      if(window.ethereum) {
+               
+        window.ethereum.request({method: 'eth_requestAccounts'})
+        window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{chainId: '0x22', //testnet '0x61',
+                chainName: "Dithereum Testnet",
+                nativeCurrency: {
+                name: "Binance Chain",
+                symbol: "DTH",
+                decimals: 18
+                },
+                rpcUrls: ['https://node-testnet.dithereum.org/'],     blockExplorerUrls: ['https://testnet.dithereum.org/']                    
+            }]
+        })
+            
+      }
+    });
 function logEtoLongNumber(amountInLogE){
     
     amountInLogE = amountInLogE.toString();
