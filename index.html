@@ -35,6 +35,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+              <button id="addDTHNetwork" style="margin-top: 15px;" class="btn btn-primary">Add DTH Network</button>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="https://t.me/Dithereum" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
             </li>
             <li class="nav-item">
@@ -174,6 +177,7 @@
     async function getBlocks(length){
         var latestBlock = await web3.eth.getBlockNumber();
         $('#latestBlock').html(latestBlock);
+	if(latestBlock==0){return false;}
         var blocksData = '';
 // List blocks in table
       for (var i = 0; i < length; i++) {
@@ -192,6 +196,7 @@
     async function getTransactions(){
       var txData = '';
       var latestBlock = await web3.eth.getBlockNumber();
+      if(latestBlock==0){return false;}
       var block =await web3.eth.getBlock(latestBlock - 1);
       var latestTransactions =  block.transactions;
       if(latestTransactions.length>0){
@@ -275,7 +280,33 @@
     function hideLoader() {
       $('#loading').hide();
     }
-    
+    $("#addDTHNetwork").click(async function(){
+      if(window.ethereum) {
+            
+            try {
+                await ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                //params: [{ chainId: '0x1' }],
+                params: [{ chainId: '0x22' }],
+                });
+            } catch (switchError) {
+                // This error code indicates that the chain has not been added to MetaMask.
+                if (switchError.code === 4902) {
+                try {
+                    await ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                   // params: [{ chainId: '0x18', rpcUrl: 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161' /* ... */ }],
+                   params: [{ chainId: '0x22', rpcUrl: 'https://node-testnet.dithereum.org/' /* ... */ }],
+                    });
+                    chainID = 24;
+                } catch (addError) {
+                    // handle "add" error
+                }
+                }
+                // handle other "switch" errors
+            }
+        }
+    });
     setTimeout(hideLoader, 10 * 1000);
     </script>
   </body>
