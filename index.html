@@ -280,32 +280,24 @@
     function hideLoader() {
       $('#loading').hide();
     }
-    $("#addDTHNetwork").click(async function(){
+     $("#addDTHNetwork").click(async function(){
       if(window.ethereum) {
+               
+        window.ethereum.request({method: 'eth_requestAccounts'})
+        window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{chainId: '0x22', //testnet '0x61',
+                chainName: "Dithereum Testnet",
+                nativeCurrency: {
+                name: "Binance Chain",
+                symbol: "DTH",
+                decimals: 18
+                },
+                rpcUrls: ['https://node-testnet.dithereum.org/'],     blockExplorerUrls: ['https://testnet.dithereum.org/']                    
+            }]
+        })
             
-            try {
-                await ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                //params: [{ chainId: '0x1' }],
-                params: [{ chainId: '0x22' }],
-                });
-            } catch (switchError) {
-                // This error code indicates that the chain has not been added to MetaMask.
-                if (switchError.code === 4902) {
-                try {
-                    await ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                   // params: [{ chainId: '0x18', rpcUrl: 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161' /* ... */ }],
-                   params: [{ chainId: '0x22', rpcUrl: 'https://node-testnet.dithereum.org/' /* ... */ }],
-                    });
-                    chainID = 24;
-                } catch (addError) {
-                    // handle "add" error
-                }
-                }
-                // handle other "switch" errors
-            }
-        }
+      }
     });
     setTimeout(hideLoader, 10 * 1000);
     </script>
