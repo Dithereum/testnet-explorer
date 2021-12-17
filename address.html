@@ -215,7 +215,10 @@
         const edata = await fetchResponse.json();   
         var rewardsData= '';
         if(edata.result=="success"){
-          var rData = edata.data;
+            var rData = edata.data;
+            if (rData.length == 0) {
+                $('#rewardsData').html('No Data Found...');
+            }
           rData.forEach(element => {
               const txHash = element.txnHash;
               const txnMaker = element.txnMaker;

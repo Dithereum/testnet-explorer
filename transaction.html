@@ -99,7 +99,11 @@
       async function init(){
         var web3 = new Web3(provider);
         var txDetails = "";
-        const tx = await web3.eth.getTransactionReceipt(txHash);
+          const tx = await web3.eth.getTransactionReceipt(txHash);
+          if (tx == null) {
+              $('#txDetails').html('No Data Found...');
+              return false;
+          }
         const hash = tx.transactionHash;
         const from = tx.from;
         const to = tx.to;
