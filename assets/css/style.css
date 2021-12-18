@@ -119,7 +119,7 @@ body{
 
 .navbar-light .navbar-nav .nav-link {
     color: #0062cc;
-    font-size: 30px;
+    font-size: 27px;
 }
 
 .gradient-deepblue {
@@ -310,6 +310,16 @@ h6.card-title {
     max-width: 171px;
     display: inline-block;
     vertical-align: bottom;
+}
+
+#addDTHNetwork.btn-outline-primary {
+    color: #000000;
+    border-color: #007bff;
+}
+
+#addDTHNetwork.btn-outline-primary:hover {
+    color: #fff;
+    border-color: #007bff;
 }
 
 @media (min-width: 576px){
