@@ -132,7 +132,7 @@
               </tr>
             </thead>
             <tbody id="txData">
-              <tr>
+              <tr id="txLoader">
                 <td colspan="4"><img src="assets/img/loader.gif"></td>
               </tr>
             </tbody>
@@ -171,7 +171,7 @@
       getBlocks(12);
     },1000);
     //setInterval(getBlocks,10000);
-    setTimeout(getTransactions,1000);
+   // setTimeout(getTransactions,1000);
     //setInterval(getTransactions,5000);
 
     async function getBlocks(length){
@@ -182,8 +182,32 @@
 // List blocks in table
       for (var i = 0; i < length; i++) {
         var block =await web3.eth.getBlock(latestBlock - i);
+        var latestTransactions =  block.transactions;
+        console.log(latestTransactions);
         var number = block.number;
         const txCount = await web3.eth.getBlockTransactionCount(number);
+        if(latestTransactions.length>0){
+          const tx = await web3.eth.getTransaction(latestTransactions[0]);
+          console.log(tx);
+          const txHash = getShortAddress(latestTransactions[0]);
+          const from=getShortAddress(tx.from);
+          const to=getShortAddress(tx.to);
+          var value=tx.value/1e18;
+          value = value.toFixed(6);
+          txData="<tr><td><a href='transaction.html?tx="+latestTransactions[i]+"'>" + txHash + "</a></td><td><a href='address.html?address="+tx.from+"'>" + from + "</a></td><td><a href='address.html?address="+tx.to+"'>" + to + "</a></td><td>" + value + " DTH</tr>";
+            
+            if ($('#txData tr').length==0){
+            $('#txData').html(txData);
+          }else{
+              if($('#txData tr').length>11){
+                $('#txData tr:last'). remove();
+                $('#txData').prepend(txData);
+              }else{
+                $('#txData').prepend(txData);
+              }
+          }
+        }
+       
         var hash = block.hash;
         var time = block.timestamp;
         var gas = block.gasUsed;
@@ -200,20 +224,30 @@
       var block =await web3.eth.getBlock(latestBlock - 1);
       var latestTransactions =  block.transactions;
       if(latestTransactions.length>0){
-      	for(var i=0;i<=11;i++){
-	if(latestTransactions[i]!=undefined){
-	    const txHash = getShortAddress(latestTransactions[i]);
-	    const tx = await web3.eth.getTransaction(latestTransactions[i]);
-	    const from=getShortAddress(tx.from);
-	    const to=getShortAddress(tx.to);
-	    var value=tx.value/1e18;
-	    value = value.toFixed(6);
-	    txData+="<tr><td><a href='transaction.html?tx="+latestTransactions[i]+"'>" + txHash + "</a></td><td><a href='address.html?address="+tx.from+"'>" + from + "</a></td><td><a href='address.html?address="+tx.to+"'>" + to + "</a></td><td>" + value + " DTH</tr>";
-	}
-     }
-        $('#txData').html(txData);
-     }
-    }
+        $('#txLoader').remove();
+      	  for(var i=0;i<=11;i++){
+            if(latestTransactions[i]!=undefined){
+                const txHash = getShortAddress(latestTransactions[i]);
+                const tx = await web3.eth.getTransaction(latestTransactions[i]);
+                const from=getShortAddress(tx.from);
+                const to=getShortAddress(tx.to);
+                var value=tx.value/1e18;
+                value = value.toFixed(6);
+                txData+="<tr><td><a href='transaction.html?tx="+latestTransactions[i]+"'>" + txHash + "</a></td><td><a href='address.html?address="+tx.from+"'>" + from + "</a></td><td><a href='address.html?address="+tx.to+"'>" + to + "</a></td><td>" + value + " DTH</tr>";
+            }
+          }
+          
+          
+          if ($('#txData tr').length==0){
+            $('#txData').html(txData);
+          }else{
+              if($('#txData tr').length>11){
+                $('#txData tr:last'). remove();
+              }
+              $('#txData').prepend(txData);
+          }
+      }
+   }
   //get short user address
   function getShortAddress(userAddress){
       firstFive   = userAddress.substring(0 , 12); 
@@ -262,7 +296,7 @@
         const length = latestBlock-oldBlock;
         oldBlock = latestBlock;
         getBlocks(12);
-        getTransactions();
+        //getTransactions();
       }
       $('#latestBlock').html(latestBlock);
     }

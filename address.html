@@ -91,6 +91,13 @@
                 </tr>
               </thead>
               <tbody id="assetsData">
+                <tr><td>BTC</td><td id="btcBalance">0.000000</td></tr>
+                <tr><td>ETH</td><td id="ethBalance">0.000000</td></tr>
+                <tr><td>BUSD</td><td id="busdBalance">0.000000</td></tr>
+                <tr><td>USDT</td><td id="usdtBalance">0.000000</td></tr>
+                <tr><td>USDC</td><td id="usdcBalance">0.000000</td></tr>
+                <tr><td>DAI</td><td id="daiBalance">0.000000</td></tr>
+                <tr><td>XRP</td><td id="xrpBalance">0.000000</td></tr>
               </tbody>
             </table>
           </div>
@@ -102,67 +109,6 @@
                <h3> System Rewards Transactions </h3>
             </div>
             <div class="card-body" id="rewardsData">
-              <!-- <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 text-left">
-                  <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
-                    <div class="d-none d-sm-flex mr-2">
-                      <span class="btn btn-icon btn-soft-secondary rounded-circle">
-                        <span class="btn-icon__inner text-dark">
-                          <img src="assets/img/DithereumIconFavicon.png" style="width: 100%;">
-                        </span>
-                      </span>
-                    </div>
-                    <div class="media-body">
-                      <span class="d-inline-block d-sm-none mr-1">
-                        <img src="assets/img/DithereumIconFavicon.png" style="width: 100%;">
-                      </span>
-                      <a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/0x646c0211acfedca9c672138444482f76c246c81ce68785156b4b2ed4e1eb99a3">0x646c0211acfedca9c672138444482f76c246c81ce68785156b4b2ed4e1eb99a3</a>
-                      <span class="d-none d-sm-block small text-secondary">53 secs ago</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                  <div class="d-sm-flex justify-content-between">
-                    <div class="text-nowrap mr-4 mb-1 mb-sm-0 text-left">
-                      <span>User <a class="hash-tag text-truncate" href="/address/0x997e1f926d1cb9d090f900f5e5a6a1f57a8151fd">0x997e1f926d1cb9d090f900f5e5a6a1f57a8151fd</a></span>
-                      <span class="d-sm-block">Contract <a href="/address/0xa9e4332448318da58cdd398286c0809684ed9bd4" class="hash-tag text-truncate">0xa9e4332448318da58cdd398286c0809684ed9bd4</a></span>
-                    </div>
-                    <div class="text-sm-left">
-                      <span class="u-label u-label--xs u-label--badge-in u-label--secondary text-center text-nowrap" data-toggle="tooltip" title="Amount">0<b>.</b>02457 DTH</span>
-                    </div>
-                  </div>
-                </div>
-              </div>    -->
-              <!-- <hr class="hr-space">
-              <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 text-left">
-                  <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
-                    <div class="d-none d-sm-flex mr-2">
-                      <span class="btn btn-icon btn-soft-secondary rounded-circle">
-                        <span class="btn-icon__inner text-dark"><img src="assets/img/DithereumIconFavicon.png" style="width: 100%;"></span>
-                      </span>
-                    </div>
-                    <div class="media-body">
-                      <span class="d-inline-block d-sm-none mr-1">
-                        <img src="assets/img/DithereumIconFavicon.png" style="width: 100%;">
-                      </span>
-                      <a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/0x646c0211acfedca9c672138444482f76c246c81ce68785156b4b2ed4e1eb99a3">0x646c0211acfedca9c672138444482f76c246c81ce68785156b4b2ed4e1eb99a3</a>
-                      <span class="d-none d-sm-block small text-secondary">53 secs ago</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                  <div class="d-sm-flex justify-content-between">
-                    <div class="text-nowrap mr-4 mb-1 mb-sm-0 text-left">
-                      <span>User <a class="hash-tag text-truncate" href="/address/0x997e1f926d1cb9d090f900f5e5a6a1f57a8151fd">0x997e1f926d1cb9d090f900f5e5a6a1f57a8151fd</a></span>
-                      <span class="d-sm-block">Contract <a href="/address/0xa9e4332448318da58cdd398286c0809684ed9bd4" class="hash-tag text-truncate">0xa9e4332448318da58cdd398286c0809684ed9bd4</a></span>
-                    </div>
-                    <div class="text-sm-left">
-                      <span class="u-label u-label--xs u-label--badge-in u-label--secondary text-center text-nowrap" data-toggle="tooltip" title="Amount">0<b>.</b>02457 DTH</span>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>    
           </div>    
         </div>
@@ -189,17 +135,17 @@
       var web3Provider = new Web3.providers.HttpProvider(provider);
       var address = '';
       var rewardsURL = 'https://api.dithereum.io/testnet-rewards'; 
-      var contractUSDT = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-      var abiTokenContract = JSON.parse('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_upgradedAddress","type":"address"}],"name":"deprecate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"deprecated","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_evilUser","type":"address"}],"name":"addBlackList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"upgradedAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balances","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"maximumFee","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_maker","type":"address"}],"name":"getBlackListStatus","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowed","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"who","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newBasisPoints","type":"uint256"},{"name":"newMaxFee","type":"uint256"}],"name":"setParams","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"issue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"redeem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"basisPointsRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"isBlackListed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_clearedUser","type":"address"}],"name":"removeBlackList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"MAX_UINT","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_blackListedUser","type":"address"}],"name":"destroyBlackFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_initialSupply","type":"uint256"},{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"Issue","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"amount","type":"uint256"}],"name":"Redeem","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newAddress","type":"address"}],"name":"Deprecate","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"feeBasisPoints","type":"uint256"},{"indexed":false,"name":"maxFee","type":"uint256"}],"name":"Params","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_blackListedUser","type":"address"},{"indexed":false,"name":"_balance","type":"uint256"}],"name":"DestroyedBlackFunds","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_user","type":"address"}],"name":"AddedBlackList","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_user","type":"address"}],"name":"RemovedBlackList","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"}]');
-      var contractUSDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
       
-      var contractUNI = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984';
+      var abiTokenContract = JSON.parse('[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"target","type":"address"},{"indexed":false,"internalType":"bool","name":"frozen","type":"bool"}],"name":"FrozenAccounts","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_from","type":"address"},{"indexed":true,"internalType":"address","name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address[]","name":"recipients","type":"address[]"},{"internalType":"uint256[]","name":"tokenAmount","type":"uint256[]"}],"name":"airdropACTIVE","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_spender","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"burn","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_from","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"burnFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"changeSafeguardStatus","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"decrease_allowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"target","type":"address"},{"internalType":"bool","name":"freeze","type":"bool"}],"name":"freezeAccount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"frozenAccount","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"increase_allowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"manualWithdrawEther","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"tokenAmount","type":"uint256"}],"name":"manualWithdrawTokens","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"maxSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"target","type":"address"},{"internalType":"uint256","name":"mintedAmount","type":"uint256"}],"name":"mintToken","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address payable","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"safeguard","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_from","type":"address"},{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address payable","name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]');
+      var contractBTC     = '0x8f7B4722B27a0502f7A849E70D600c129e7BF327';
+      var contractBUSD    = '0x80E7bee585BfA8778137914c9BB548eFb696ecF1';
+      var contractDAI     = '0x5eb411B524d27e2C0cAa5ca570727D2Da85a743B';
+      var contraactETH     ='0x402ffCd74046D2653C4A964A6DD26bC7256aCA74';
+      var contractUSDC    = '0x5eF926755da4a03E7Ac535A33d4D2Dbc9c0F119C';
+      var contractUSDT    = '0x45B765B5CA8e985464353C31E7EeBb95cAf22615';
+      var contractXRP     = '0x0da2779d2Fb0A4BD28A7FAAEE1e72Ecf2F3f12D9';
       
-      var contractLINK = '0x514910771AF9Ca656af840dff83E8264EcF986CA';
-      
-      var contractDAI = '0x6b175474e89094c44da98b954eedeac495271d0f';
-      
-      var USDTInstance,USDCInstance,UNIInstance,LINKInstance,DAIInstance;
+      var btcInstance,USDCInstance,USDTInstance,BUSDInstance,DAIInstance,ETHInstance,XRPInstance;
 
       $.urlParam = function(name){
           var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -210,15 +156,18 @@
       }
 
       async function init(){
-        
+        $('#rewardsData').html('No Data Found...');
         const fetchResponse =  await fetch(rewardsURL+'?user='+address);
         const edata = await fetchResponse.json();   
         var rewardsData= '';
+        if(edata.rsult=="error"){
+          $('#rewardsData').html('No Data Found...');
+        }
         if(edata.result=="success"){
             var rData = edata.data;
             if (rData.length == 0) {
-                $('#rewardsData').html('No Data Found...');
-            }
+              $('#rewardsData').html('No Data Found...');
+            }else{
           rData.forEach(element => {
               const txHash = element.txnHash;
               const txnMaker = element.txnMaker;
@@ -259,10 +208,10 @@
                   '</div>'+
                   '<hr class="hr-space">';
             });
+          }
+          $('#rewardsData').html(rewardsData);
       } 
         
-        $('#rewardsData').html(rewardsData);
-
         var web3 = new Web3(provider);
         var assetsData = '';
         // const balance = await web3.eth.getBalance(address);
@@ -271,24 +220,27 @@
         $('#txAddress').html(address);
         //$('#balance').html(balance/1e18+' DTH');   
         $('#balance').html((balance/1e18).toFixed(4) +' DTH');   
-        USDTInstance  = new web3.eth.Contract( abiTokenContract, contractUSDT, {});
-        const USDTbalance = await USDTInstance.methods.balanceOf(address).call();
-        assetsData+="<tr><td>USDT</td><td>" + USDTbalance + "</td></tr>"; 
-        USDCInstance  = new web3.eth.Contract( abiTokenContract, contractUSDC, {});
-        const USDCbalance = await USDCInstance.methods.balanceOf(address).call();
-        assetsData+="<tr><td>USDC</td><td>" + USDCbalance + "</td></tr>"; 
-        UNIInstance  = new web3.eth.Contract( abiTokenContract, contractUNI, {});
-        const UNIbalance = await UNIInstance.methods.balanceOf(address).call();
-        assetsData+="<tr><td>UNI</td><td>" + UNIbalance + "</td></tr>"; 
-        LINKInstance  = new web3.eth.Contract( abiTokenContract, contractLINK, {});
-        const LINKbalance = await LINKInstance.methods.balanceOf(address).call();
-        assetsData+="<tr><td>LINK</td><td>" + LINKbalance + "</td></tr>"; 
-        DAIInstance  = new web3.eth.Contract( abiTokenContract, contractDAI, {});
-        const DAIbalance = await DAIInstance.methods.balanceOf(address).call();
-        assetsData+="<tr><td>DAI</td><td>" + DAIbalance + "</td></tr>"; 
-        $('#assetsData').html(assetsData);
-       
-        
+        btcInstance  = new web3.eth.Contract( abiTokenContract, contractBTC, {});
+        const btcbalance = await btcInstance.methods.balanceOf(address).call();
+        $('#btcBalance').html(btcbalance);
+        busdInstance  = new web3.eth.Contract( abiTokenContract, contractBUSD, {});
+        const busdbalance = await busdInstance.methods.balanceOf(address).call();
+        $('#busdBalance').html(busdbalance);
+        daiInstance  = new web3.eth.Contract( abiTokenContract, contractDAI, {});
+        const daibalance = await daiInstance.methods.balanceOf(address).call();
+        $('#daiBalance').html(daibalance);
+        ethInstance  = new web3.eth.Contract( abiTokenContract, contraactETH, {});
+        const ethbalance = await ethInstance.methods.balanceOf(address).call();
+        $('#ethBalance').html(ethbalance);
+        usdcInstance  = new web3.eth.Contract( abiTokenContract, contractUSDC, {});
+        const usdcbalance = await usdcInstance.methods.balanceOf(address).call();
+        $('#usdcBalance').html(usdcbalance);
+        usdtInstance  = new web3.eth.Contract( abiTokenContract, contractUSDT, {});
+        const usdtbalance = await usdtInstance.methods.balanceOf(address).call();
+        $('#usdtBalance').html(usdtbalance);
+        xrpInstance  = new web3.eth.Contract( abiTokenContract, contractXRP, {});
+        const xrpbalance = await xrpInstance.methods.balanceOf(address).call();
+        $('#xrpBalance').html(xrpbalance);     
 
     }
     setTimeout(init,1000);
