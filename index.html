@@ -179,16 +179,15 @@
         $('#latestBlock').html(latestBlock);
 	if(latestBlock==0){return false;}
         var blocksData = '';
+        $('#txData').html('');
 // List blocks in table
       for (var i = 0; i < length; i++) {
         var block =await web3.eth.getBlock(latestBlock - i);
-        var latestTransactions =  block.transactions;
-        console.log(latestTransactions);
+        var latestTransactions =  block.transactions;        
         var number = block.number;
         const txCount = await web3.eth.getBlockTransactionCount(number);
         if(latestTransactions.length>0){
-          const tx = await web3.eth.getTransaction(latestTransactions[0]);
-          console.log(tx);
+          const tx = await web3.eth.getTransaction(latestTransactions[0]);        
           const txHash = getShortAddress(latestTransactions[0]);
           const from=getShortAddress(tx.from);
           const to=getShortAddress(tx.to);
