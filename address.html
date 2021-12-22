@@ -91,13 +91,13 @@
                 </tr>
               </thead>
               <tbody id="assetsData">
-                <tr><td>BTC</td><td id="btcBalance">0.000000</td></tr>
-                <tr><td>ETH</td><td id="ethBalance">0.000000</td></tr>
-                <tr><td>BUSD</td><td id="busdBalance">0.000000</td></tr>
-                <tr><td>USDT</td><td id="usdtBalance">0.000000</td></tr>
-                <tr><td>USDC</td><td id="usdcBalance">0.000000</td></tr>
-                <tr><td>DAI</td><td id="daiBalance">0.000000</td></tr>
-                <tr><td>XRP</td><td id="xrpBalance">0.000000</td></tr>
+                <tr><td>BTC</td><td id="btcBalance">0.0000</td></tr>
+                <tr><td>ETH</td><td id="ethBalance">0.0000</td></tr>
+                <tr><td>BUSD</td><td id="busdBalance">0.0000</td></tr>
+                <tr><td>USDT</td><td id="usdtBalance">0.0000</td></tr>
+                <tr><td>USDC</td><td id="usdcBalance">0.0000</td></tr>
+                <tr><td>DAI</td><td id="daiBalance">0.0000</td></tr>
+                <tr><td>XRP</td><td id="xrpBalance">0.0000</td></tr>
               </tbody>
             </table>
           </div>
@@ -222,25 +222,25 @@
         $('#balance').html((balance/1e18).toFixed(4) +' DTH');   
         btcInstance  = new web3.eth.Contract( abiTokenContract, contractBTC, {});
         const btcbalance = await btcInstance.methods.balanceOf(address).call();
-        $('#btcBalance').html(btcbalance);
+        $('#btcBalance').html(btcbalance/1e18).toFixed(4));
         busdInstance  = new web3.eth.Contract( abiTokenContract, contractBUSD, {});
         const busdbalance = await busdInstance.methods.balanceOf(address).call();
-        $('#busdBalance').html(busdbalance);
+        $('#busdBalance').html(busdbalance/1e18).toFixed(4));
         daiInstance  = new web3.eth.Contract( abiTokenContract, contractDAI, {});
         const daibalance = await daiInstance.methods.balanceOf(address).call();
-        $('#daiBalance').html(daibalance);
+        $('#daiBalance').html(daibalance/1e18).toFixed(4));
         ethInstance  = new web3.eth.Contract( abiTokenContract, contraactETH, {});
         const ethbalance = await ethInstance.methods.balanceOf(address).call();
-        $('#ethBalance').html(ethbalance);
+        $('#ethBalance').html(ethbalance/1e18).toFixed(4));
         usdcInstance  = new web3.eth.Contract( abiTokenContract, contractUSDC, {});
         const usdcbalance = await usdcInstance.methods.balanceOf(address).call();
-        $('#usdcBalance').html(usdcbalance);
+        $('#usdcBalance').html(usdcbalance/1e18).toFixed(4));
         usdtInstance  = new web3.eth.Contract( abiTokenContract, contractUSDT, {});
         const usdtbalance = await usdtInstance.methods.balanceOf(address).call();
-        $('#usdtBalance').html(usdtbalance);
+        $('#usdtBalance').html(usdtbalance/1e18).toFixed(4));
         xrpInstance  = new web3.eth.Contract( abiTokenContract, contractXRP, {});
         const xrpbalance = await xrpInstance.methods.balanceOf(address).call();
-        $('#xrpBalance').html(xrpbalance);     
+        $('#xrpBalance').html(xrpbalance/1e18).toFixed(4));     
 
     }
     setTimeout(init,1000);
