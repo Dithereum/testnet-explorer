@@ -93,6 +93,7 @@
               <tbody id="assetsData">
                 <tr><td>BTC</td><td id="btcBalance">0.0000</td></tr>
                 <tr><td>ETH</td><td id="ethBalance">0.0000</td></tr>
+                <tr><td>DUSD</td><td id="dusdBalance">0.0000</td></tr>
                 <tr><td>BUSD</td><td id="busdBalance">0.0000</td></tr>
                 <tr><td>USDT</td><td id="usdtBalance">0.0000</td></tr>
                 <tr><td>USDC</td><td id="usdcBalance">0.0000</td></tr>
@@ -144,8 +145,9 @@
       var contractUSDC    = '0x5eF926755da4a03E7Ac535A33d4D2Dbc9c0F119C';
       var contractUSDT    = '0x45B765B5CA8e985464353C31E7EeBb95cAf22615';
       var contractXRP     = '0x0da2779d2Fb0A4BD28A7FAAEE1e72Ecf2F3f12D9';
+      var contractDUSD    = '0x25C5CE1BB68952D29A46f59579B537DA3CdCDe8E';
       
-      var btcInstance,USDCInstance,USDTInstance,BUSDInstance,DAIInstance,ETHInstance,XRPInstance;
+      var btcInstance,usdcInstance,usdtInstance,busdInstance,daiInstance,ethInstance,xrpInstance,dusdInstance;
 
       $.urlParam = function(name){
           var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -254,7 +256,12 @@
         var xrpbalance = await xrpInstance.methods.balanceOf(address).call();
         xrpbalance = xrpbalance/1e18;
         xrpbalance = xrpbalance.toFixed(4);
-        $('#xrpBalance').html(xrpbalance);     
+        $('#xrpBalance').html(xrpbalance);
+        dusdInstance  = new web3.eth.Contract( abiTokenContract, contractDUSD, {});
+        var dusdbalance = await dusdInstance.methods.balanceOf(address).call();
+        dusdbalance = dusdbalance/1e18;
+        dusdbalance = dusdbalance.toFixed(4);
+        $('#dusdBalance').html(dusdbalance);
 
     }
     setTimeout(init,1000);
