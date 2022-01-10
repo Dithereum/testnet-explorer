@@ -91,14 +91,17 @@
                 </tr>
               </thead>
               <tbody id="assetsData">
-                <tr><td>BTC</td><td id="btcBalance">0.0000</td></tr>
-                <tr><td>ETH</td><td id="ethBalance">0.0000</td></tr>
-                <tr><td>DUSD</td><td id="dusdBalance">0.0000</td></tr>
-                <tr><td>BUSD</td><td id="busdBalance">0.0000</td></tr>
-                <tr><td>USDT</td><td id="usdtBalance">0.0000</td></tr>
-                <tr><td>USDC</td><td id="usdcBalance">0.0000</td></tr>
-                <tr><td>DAI</td><td id="daiBalance">0.0000</td></tr>
-                <tr><td>XRP</td><td id="xrpBalance">0.0000</td></tr>
+                  <tr><td>BTC</td><td id="btcBalance">0.0000</td></tr>
+                  <tr><td>ETH</td><td id="ethBalance">0.0000</td></tr>
+                  <tr><td>DUSD</td><td id="dusdBalance">0.0000</td></tr>
+                  <tr><td>BUSD</td><td id="busdBalance">0.0000</td></tr>
+                  <tr><td>USDT</td><td id="usdtBalance">0.0000</td></tr>
+                  <tr><td>USDC</td><td id="usdcBalance">0.0000</td></tr>
+                  <tr><td>DAI</td><td id="daiBalance">0.0000</td></tr>
+                  <tr><td>XRP</td><td id="xrpBalance">0.0000</td></tr>
+                  <tr><td>BNB</td><td id="bnbBalance">0.0000</td></tr>
+                  <tr><td>MATIC</td><td id="maticBalance">0.0000</td></tr>
+                  <tr><td>HT</td><td id="htBalance">0.0000</td></tr>
               </tbody>
             </table>
           </div>
@@ -141,13 +144,16 @@
       var contractBTC     = '0xDd26bc397C5D383fB8AC6D94ed0915C8e6C6886F';
       var contractBUSD    = '0x7F2EE3FF822B330352E1a0f5BB040B4323454914';
       var contractDAI     = '0x02774D50187862B5c18F5c23Fa104533bef87Cf4';
-      var contraactETH     ='0xe1789cF2C86Ff424ffBf971E6A1Ddb69a2C62985';
+      var contraactETH    = '0xe1789cF2C86Ff424ffBf971E6A1Ddb69a2C62985';
       var contractUSDC    = '0x26F19776Be92e38f19A8a6093eCa10e3e23D1CeD';
       var contractUSDT    = '0x0561748dadA4d9b23Fa026d9d38E50CD67B8FD3f';
       var contractXRP     = '0xAF8ac37597f858D74964139af2C4A69f0BAB5d59';
-      var contractDUSD    = '0xE6DE78C9E9AC590e974691Be2ccCB36516372Af5';
+      var contractDUSD    = '0xE82E083195012A69deBce378fFA014b9721D780A';
+      var contractBNB     = '0xF4905930BB56F9Aeb520de0897c9283d0B3624eE';
+      var contractMATIC   = '0x07F25AcFf1F0e725Df3997b3092DC594B1d7a496';
+      var contractHT      = '0xdF310a187Bb35A0B0090DC7Cb2C2F784Ccf72036';
       
-      var btcInstance,usdcInstance,usdtInstance,busdInstance,daiInstance,ethInstance,xrpInstance,dusdInstance;
+      var btcInstance,usdcInstance,usdtInstance,busdInstance,daiInstance,ethInstance,xrpInstance,dusdInstance,bnbInstance,maticInstance,htInstance;
 
       $.urlParam = function(name){
           var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -262,6 +268,21 @@
         dusdbalance = dusdbalance/1e18;
         dusdbalance = dusdbalance.toFixed(4);
         $('#dusdBalance').html(dusdbalance);
+        bnbInstance = new web3.eth.Contract(abiTokenContract, contractBNB, {});
+        var bnbbalance = await bnbInstance.methods.balanceOf(address).call();
+        bnbbalance = bnbbalance / 1e18;
+        bnbbalance = bnbbalance.toFixed(4);
+        $('#bnbBalance').html(bnbbalance);
+        maticInstance = new web3.eth.Contract(abiTokenContract, contractMATIC, {});
+        var maticbalance = await maticInstance.methods.balanceOf(address).call();
+        maticbalance = maticbalance / 1e18;
+        maticbalance = maticbalance.toFixed(4);
+        $('#maticBalance').html(maticbalance);
+        htInstance = new web3.eth.Contract(abiTokenContract, contractHT, {});
+        var htbalance = await dhtInstance.methods.balanceOf(address).call();
+        htbalance = htbalance / 1e18;
+        htbalance = htbalance.toFixed(4);
+        $('#htBalance').html(htbalance);
 
     }
     setTimeout(init,1000);
