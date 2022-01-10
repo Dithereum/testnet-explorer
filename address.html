@@ -279,7 +279,7 @@
         maticbalance = maticbalance.toFixed(4);
         $('#maticBalance').html(maticbalance);
         htInstance = new web3.eth.Contract(abiTokenContract, contractHT, {});
-        var htbalance = await dhtInstance.methods.balanceOf(address).call();
+        var htbalance = await htInstance.methods.balanceOf(address).call();
         htbalance = htbalance / 1e18;
         htbalance = htbalance.toFixed(4);
         $('#htBalance').html(htbalance);
