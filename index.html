@@ -161,6 +161,7 @@
       var web3Provider = new Web3.providers.HttpProvider(provider);
       var web3;
       var oldBlock=0;
+      var transactionArray = [];
       web3 = new Web3(provider);
       async function init(){
         web3 = new Web3(provider);
@@ -179,32 +180,55 @@
         $('#latestBlock').html(latestBlock);
 	if(latestBlock==0){return false;}
         var blocksData = '';
-        $('#txData').html('');
+        var txData = '';
+        var temptxData ='';
 // List blocks in table
       for (var i = 0; i < length; i++) {
         var block =await web3.eth.getBlock(latestBlock - i);
-        var latestTransactions =  block.transactions;        
+        var latestTransactions =  block.transactions;
+        
         var number = block.number;
         const txCount = await web3.eth.getBlockTransactionCount(number);
         if(latestTransactions.length>0){
-          const tx = await web3.eth.getTransaction(latestTransactions[0]);        
+          if(transactionArray.length==0){
+            //$('#txData').html('');
+          }
+          const txLink = latestTransactions[0];
+          const tx = await web3.eth.getTransaction(latestTransactions[0]);
+          var isInarray = false;
           const txHash = getShortAddress(latestTransactions[0]);
           const from=getShortAddress(tx.from);
           const to=getShortAddress(tx.to);
           var value=tx.value/1e18;
           value = value.toFixed(6);
-          txData="<tr><td><a href='transaction.html?tx="+latestTransactions[i]+"'>" + txHash + "</a></td><td><a href='address.html?address="+tx.from+"'>" + from + "</a></td><td><a href='address.html?address="+tx.to+"'>" + to + "</a></td><td>" + value + " DTH</tr>";
-            
-            if ($('#txData tr').length==0){
-            $('#txData').html(txData);
-          }else{
-              if($('#txData tr').length>11){
-                $('#txData tr:last'). remove();
-                $('#txData').prepend(txData);
-              }else{
-                $('#txData').prepend(txData);
+          txData="<tr><td><a href='transaction.html?tx="+txLink+"'>" + txHash + "</a></td><td><a href='address.html?address="+tx.from+"'>" + from + "</a></td><td><a href='address.html?address="+tx.to+"'>" + to + "</a></td><td>" + value + " DTH</tr>";
+            if(transactionArray.length==0){
+              transactionArray.push({"txHash":txLink,"value":txData});  
+            }
+            for (var i = 0; i < transactionArray.length; i++) {  
+              if (transactionArray[i]["txHash"]==txLink) {        
+                //transactionArray.push({"txHash":txLink,"value":txData});  
+                isInarray = true;
               }
-          }
+    
+            }
+            if(isInarray==false){
+              transactionArray.push({"txHash":txLink,"value":txData});  
+            }
+            if(transactionArray.length>11){
+              transactionArray.shift();
+            }
+
+          //   if ($('#txData tr').length==0){
+          //   $('#txData').html(txData);
+          // }else{
+          //     if($('#txData tr').length>11){
+          //       $('#txData tr:last'). remove();
+          //       $('#txData').prepend(txData);
+          //     }else{
+          //       $('#txData').prepend(txData);
+          //     }
+          // }
         }
        
         var hash = block.hash;
@@ -214,7 +238,11 @@
             blocksData+="<tr class='txRow' id='row"+i+"'><td>" + number + "</td><td>" + txCount + "</td><td>" + time1 + "</td><td>" + gas + "</tr>";    
       }
       $('#blocksData').html(blocksData);
-
+      for (var i = transactionArray.length-1; i>=0 ; i--) {  
+        temptxData+=transactionArray[i]["value"];        
+      }
+      $('#txData').html(temptxData);
+      
     }
     async function getTransactions(){
       var txData = '';
