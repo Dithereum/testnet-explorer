@@ -85,23 +85,24 @@
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center table-responsive">
             <table class="table blocksTable">
               <thead>
-                <tr>
-                  <th scope="col">Asset</th>
-                  <th scope="col">Total Balance</th>
-                </tr>
+                  <tr>
+                      <th scope="col">Asset</th>
+                      <th scope="col">Contract Address</th>
+                      <th scope="col">Total Balance</th>
+                  </tr>
               </thead>
               <tbody id="assetsData">
-                  <tr><td>BTC</td><td id="btcBalance">0.0000</td></tr>
-                  <tr><td>ETH</td><td id="ethBalance">0.0000</td></tr>
-                  <tr><td>BNB</td><td id="bnbBalance">0.0000</td></tr>
-                  <tr><td>MATIC</td><td id="maticBalance">0.0000</td></tr>
-                  <tr><td>HT</td><td id="htBalance">0.0000</td></tr>
-                  <tr><td>XRP</td><td id="xrpBalance">0.0000</td></tr>
-                  <tr><td>DUSD</td><td id="dusdBalance">0.0000</td></tr>
-                  <tr><td>BUSD</td><td id="busdBalance">0.0000</td></tr>
-                  <tr><td>USDT</td><td id="usdtBalance">0.0000</td></tr>
-                  <tr><td>USDC</td><td id="usdcBalance">0.0000</td></tr>
-                  <tr><td>DAI</td><td id="daiBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/btc.png" style="width:24px; height:24px;" />&nbsp;&nbsp;BTC</td><td><a target="_blank" href="address.html?address=xDd26bc397C5D383fB8AC6D94ed0915C8e6C6886F">0xDd2...6886F</a></td><td id="btcBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/eth.png" style="width:24px; height:24px;" />&nbsp;&nbsp;ETH</td><td><a target="_blank" href="address.html?address=0xe1789cF2C86Ff424ffBf971E6A1Ddb69a2C62985">0xe17...62985</a></td><td id="ethBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/bnb.png" style="width:24px; height:24px;" />&nbsp;&nbsp;BNB</td><td><a target="_blank" href="address.html?address=0xF4905930BB56F9Aeb520de0897c9283d0B3624eE">0xF49...624eE</a></td><td id="bnbBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/matic.png" style="width: 24px; height: 24px; border-radius: 12px;" />&nbsp;&nbsp;MATIC</td><td><a target="_blank" href="address.html?address=0x07F25AcFf1F0e725Df3997b3092DC594B1d7a496">0x07F...7a496</a></td><td id="maticBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/ht.png" style="width:24px; height:24px;" />&nbsp;&nbsp;HT</td><td><a target="_blank" href="address.html?address=0xdF310a187Bb35A0B0090DC7Cb2C2F784Ccf72036">0xdF3...72036</a></td><td id="htBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/xrp.png" style="width:24px; height:24px;" />&nbsp;&nbsp;XRP</td><td><a target="_blank" href="address.html?address=0xAF8ac37597f858D74964139af2C4A69f0BAB5d59">0xAF8...B5d59</a></td><td id="xrpBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/DithereumIconFavicon.png" style="width:24px; height:32px;" />&nbsp;&nbsp;DUSD</td><td><a target="_blank" href="address.html?address=0xE82E083195012A69deBce378fFA014b9721D780A">0xE82...D780A</a></td><td id="dusdBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/busd.png" style="width:24px; height:24px;" />&nbsp;&nbsp;BUSD</td><td><a target="_blank" href="address.html?address=0x7F2EE3FF822B330352E1a0f5BB040B4323454914">0x7F2...54914</a></td><td id="busdBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/usdt.png" style="width:24px; height:24px;" />&nbsp;&nbsp;USDT</td><td><a target="_blank" href="address.html?address=0x0561748dadA4d9b23Fa026d9d38E50CD67B8FD3f">0x056...8FD3f</a></td><td id="usdtBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/usdc.png" style="width:24px; height:24px;" />&nbsp;&nbsp;USDC</td><td><a target="_blank" href="address.html?address=0x26F19776Be92e38f19A8a6093eCa10e3e23D1CeD">0x26F...D1CeD</a></td><td id="usdcBalance">0.0000</td></tr>
+                  <tr><td><img src="assets/img/dai.png" style="width:24px; height:24px;" />&nbsp;&nbsp;DAI</td><td><a target="_blank" href="address.html?address=0x02774D50187862B5c18F5c23Fa104533bef87Cf4">0x027...87Cf4</a></td><td id="daiBalance">0.0000</td></tr>
                   
               </tbody>
             </table>
@@ -342,7 +343,12 @@
 
         function sleep(ms) {
           return new Promise(resolve => setTimeout(resolve, ms));
-       }
+        }
+        //get short user address
+        function getShortAddress(userAddress) {
+            firstFive = userAddress.substring(0, 12);
+            return firstFive + '...';
+        }
 function logEtoLongNumber(amountInLogE){
     
     amountInLogE = amountInLogE.toString();
