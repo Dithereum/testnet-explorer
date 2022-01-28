@@ -146,7 +146,7 @@
       var contractBTC     = '0xDd26bc397C5D383fB8AC6D94ed0915C8e6C6886F';
       var contractBUSD    = '0x7F2EE3FF822B330352E1a0f5BB040B4323454914';
       var contractDAI     = '0x02774D50187862B5c18F5c23Fa104533bef87Cf4';
-      var contraactETH    = '0xe1789cF2C86Ff424ffBf971E6A1Ddb69a2C62985';
+      var contractETH    = '0xaeF855F175D50D38714a366b7362ef344bA88bD0';
       var contractUSDC    = '0x26F19776Be92e38f19A8a6093eCa10e3e23D1CeD';
       var contractUSDT    = '0x0561748dadA4d9b23Fa026d9d38E50CD67B8FD3f';
       var contractXRP     = '0xAF8ac37597f858D74964139af2C4A69f0BAB5d59';
@@ -245,7 +245,7 @@
         daibalance = daibalance/1e18;
         daibalance = daibalance.toFixed(4);
         $('#daiBalance').html(daibalance);
-        ethInstance  = new web3.eth.Contract( abiTokenContract, contraactETH, {});
+        ethInstance  = new web3.eth.Contract( abiTokenContract, contractETH, {});
         var ethbalance = await ethInstance.methods.balanceOf(address).call();
         ethbalance = ethbalance/1e18;
         ethbalance = ethbalance.toFixed(4);
